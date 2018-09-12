@@ -1,4 +1,6 @@
-# marblecutter-virtual
+# mpg-marblecutter-virtual
+
+*Originally based on [marblecutter-virtual](https://github.com/mojodna/marblecutter-virtual).*
 
 I am a tile server for HTTP(S)-accessible [Cloud Optimized GeoTIFFs
 (COGs)](http://www.cogeo.org/).
@@ -17,13 +19,13 @@ docker-compose up
 
 A tile server will then be accessible on `localhost:8000`. To browse a map
 preview, visit
-`http://localhost:8000/preview?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif`.
+`http://localhost:8000/preview?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif`
 
 URLs (`url` in the query string) must be URL-encoded. From a browser's
 JavaScript console (or Node.js REPL), run:
 
 ```javascript
-encodeURIComponent("https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-harvey/SkySat_Freeport_s03_20170831T162740Z3.tif")
+encodeURIComponent("https://s3.amazonaws.com/tiles.mpgranch.com/sources/2017c_jan18clip_cloudoptimized.tif")
 ```
 
 If you need to access non-public files on S3, set your environment accordingly
@@ -41,15 +43,15 @@ If you need to access non-public files on S3, set your environment accordingly
 #### Example
 
 ```bash
-$ curl "http://localhost:8000/bounds?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif"
+$ curl "http://localhost:8000/bounds?url=http://localhost:8000/preview?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif"
 {
   "bounds": [
-    -95.46993599071261,
-    28.86905396361014,
-    -95.2386152334213,
-    29.068190805522605
+    -114.0598676519122,
+    46.65466452757754,
+    -113.9039579851515,
+    46.78638812429985
   ],
-  "url": "https://s3-us-west-2.amazonaws.com/planet-disaster-data/hurricane-harvey/SkySat_Freeport_s03_20170831T162740Z3.tif"
+  "url": "https://s3.amazonaws.com/tiles.mpgranch.com/sources/2017c_jan18clip_cloudoptimized.tif"
 }
 ```
 
@@ -77,19 +79,19 @@ source image (surfaced as transparency in the output).
 #### Examples
 
 ```bash
-$ curl "http://localhost:8000/tiles/14/3851/6812@2x?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif" | imgcat
+$ curl "http://localhost:8000/tiles/14/3851/6812@2x?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif" | imgcat
 ```
 
 ![RGB](docs/rgb.png)
 
 ```bash
-$ curl "http://localhost:8000/tiles/14/3851/6812@2x?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif&rgb=1,1,1" | imgcat
+$ curl "http://localhost:8000/tiles/14/3851/6812@2x?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif&rgb=1,1,1" | imgcat
 ```
 
 ![greyscale](docs/greyscale.png)
 
 ```bash
-$ curl "http://localhost:8000/tiles/14/3851/6812@2x?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif&rgb=1,1,1&linearStretch=true" | imgcat
+$ curl "http://localhost:8000/tiles/14/3851/6812@2x?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif&rgb=1,1,1&linearStretch=true" | imgcat
 ```
 
 ![greyscale stretched](docs/greyscale_stretched.png)
@@ -103,7 +105,7 @@ See tile parameters.
 #### Example
 
 ```bash
-$ curl "http://localhost:8000/tiles?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif"
+$ curl "http://localhost:8000/tiles?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif"
 {
   "bounds": [
     -95.46993599071261,
@@ -121,7 +123,7 @@ $ curl "http://localhost:8000/tiles?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com
   "name": "Untitled",
   "tilejson": "2.1.0",
   "tiles": [
-    "//localhost:8000/tiles/{z}/{x}/{y}?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif"
+    "//localhost:8000/tiles/{z}/{x}/{y}?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif"
   ]
 }
 ```
@@ -134,20 +136,22 @@ See tile parameters.
 
 #### Example
 
-`http://localhost:8000/preview?url=https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fplanet-disaster-data%2Fhurricane-harvey%2FSkySat_Freeport_s03_20170831T162740Z3.tif`
+`http://localhost:8000/preview?url=https%3A%2F%2Fs3.amazonaws.com%2Ftiles.mpgranch.com%2Fsources%2F2017c_jan18clip_cloudoptimized.tif`
 
 ## Deploying to AWS Lambda
 
-tk
+Requires [apex up](https://github.com/apex/up). The first time you deploy, make an `up.json` file:
+
+```bash
+cp up.json.example up.json
+```
+
+Edit `up.json` to use the `profile` name for an AWS configuration profile (typically stored in `$HOME/.aws/credentials`).
+
+To deploy to staging:
 
 ```bash
 make deploy-up
-```
-
-or
-
-```bash
-make deploy-apex
 ```
 
 NOTE: when setting up a Cloudfront distribution in front of a regional API
