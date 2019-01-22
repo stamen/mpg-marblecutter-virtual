@@ -1,9 +1,10 @@
-FROM quay.io/mojodna/gdal:v2.3.1-2
-MAINTAINER Seth Fitzsimmons <seth@mojodna.net>
+FROM quay.io/mojodna/gdal
+LABEL maintainer="Seth Fitzsimmons <seth@mojodna.net>"
 
 ARG http_proxy
 
 ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
 ENV GDAL_CACHEMAX 512
 ENV GDAL_DISABLE_READDIR_ON_OPEN TRUE
 ENV GDAL_HTTP_MERGE_CONSECUTIVE_RANGES YES

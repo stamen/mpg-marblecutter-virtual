@@ -13,18 +13,30 @@ LOG = logging.getLogger(__name__)
 
 
 class VirtualCatalog(Catalog):
+    _rgb = None
+    _nodata = None
+    _linear_stretch = None
+    _resample = None
 
     def __init__(self, uri, rgb=None, nodata=None, linear_stretch=None, resample=None):
         self._uri = uri
-        self._rgb = rgb
-        self._nodata = nodata
-        self._linear_stretch = linear_stretch
+
+        if rgb:
+            self._rgb = rgb
+
+        if nodata:
+            self._nodata = nodata
+
+        if linear_stretch:
+            self._linear_stretch = linear_stretch
+
         try:
             # test whether provided resampling method is valid
             Resampling[resample]
             self._resample = resample
         except KeyError:
             self._resample = None
+
         self._meta = {}
 
         with get_source(self._uri) as src:
@@ -37,7 +49,7 @@ class VirtualCatalog(Catalog):
             global_min = src.get_tag_item("TIFFTAG_MINSAMPLEVALUE")
             global_max = src.get_tag_item("TIFFTAG_MAXSAMPLEVALUE")
 
-            for band in xrange(0, src.count):
+            for band in range(0, src.count):
                 self._meta["values"] = self._meta.get("values", {})
                 self._meta["values"][band] = {}
                 min_val = src.get_tag_item("STATISTICS_MINIMUM", bidx=band + 1)
