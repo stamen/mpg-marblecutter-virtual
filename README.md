@@ -140,24 +140,6 @@ See tile parameters.
 
 ## Deploying to AWS
 
-### Old instructions
-
-Requires [apex up](https://github.com/apex/up). The first time you deploy, make an `up.json` file:
-
-```bash
-cp up.json.example up.json
-```
-
-Edit `up.json` to use the `profile` name for an AWS configuration profile (typically stored in `$HOME/.aws/credentials`).
-
-To deploy to staging:
-
-```bash
-make deploy-up
-```
-
-### New instructions
-
 marblecutter-virtual is deployed using the [AWS Serverless Application Model
 (SAM)](https://github.com/awslabs/serverless-application-model).
 
