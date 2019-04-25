@@ -16,6 +16,3 @@ packaged.yaml: .aws-sam/build/template.yaml
 
 clean:
 	rm -rf .aws-sam/ packaged.yaml
-
-server:
-	docker build --build-arg http_proxy=$(http_proxy) -t quay.io/mojodna/marblecutter-virtual .
